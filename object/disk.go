@@ -19,7 +19,7 @@ const (
 	BitMapBusy       = 1
 )
 
-type disk struct {
+type Disk struct {
 	Disk    [][]rune         // 磁盘，包含多个盘块
 	UMap    map[string]*User // 系统用户集合
 	FcbList []*Fcb           // contain all fcb
