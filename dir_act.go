@@ -73,6 +73,7 @@ func PathResolve(path string) *object.Result {
 	curDir := object.MMemory.CurDir
 	pathL := strings.Split(path, object.PathSeparator)
 	for i, v := range pathL {
+		// back to pre
 		if IsBackToPre(v) {
 			if curDir.ParIndex != 0 {
 				// up to pre
@@ -80,7 +81,7 @@ func PathResolve(path string) *object.Result {
 			}
 			continue
 		}
-
+		// 路径错误
 		if IsBlank(pathL[i]) {
 			if i != 0 && i != len(pathL)-1 {
 				return object.FailMsg(fmt.Sprintf("[solve path fail]: %s not found", path))

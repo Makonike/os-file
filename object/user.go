@@ -1,11 +1,13 @@
 package object
 
+import "time"
+
 type User struct {
 	username string
 	password string
 }
 
-func (u *User) NewUser(username, password string) *User {
+func NewUser(username, password string) *User {
 	return &User{
 		username: username,
 		password: password,
@@ -14,7 +16,7 @@ func (u *User) NewUser(username, password string) *User {
 
 func Login(username, password string) *Result {
 	if MMemory.CurUser != nil {
-		return FailMsg("[user login fail]: plz logout first")
+		return FailMsg("[user login fail]: plz logout now")
 	}
 
 	u, ok := DCache.Disk.UMap[username]
@@ -31,8 +33,32 @@ func Login(username, password string) *Result {
 			return SuccessResult()
 		}
 	}
-	// TODO: lazy load to fix error
+	// todo: lazy load to fix error
 	return FailMsg("[user login fail]: internal server error, not found the user dir")
+}
+
+func Register(username, password string) *Result {
+	if MMemory.CurUser == nil {
+		return FailMsg("[register user fail]: plz logout now")
+	}
+	if username == "" {
+		return FailMsg("[register user fail]: blank username")
+	}
+	if password == "" {
+		return FailMsg("[register user fail]: blank password")
+	}
+	u, ok := DCache.Disk.UMap[username]
+	if ok && u != nil {
+		return FailMsg("[register user fail]: existed user")
+	}
+	DCache.Disk.UMap[username] = NewUser(username, password)
+	ct := time.Now()
+	fcb := NewFcb(true, username, 0, 0, nil, ct, ct)
+	DCache.Disk.FcbList = append(DCache.Disk.FcbList, fcb)
+
+	dir := NewDir(fcb, len(DCache.Disk.Dirs)-1, 0)
+	DCache.Disk.Dirs[0].Children = append(DCache.Disk.Dirs[0].Children, dir)
+	return SuccessMsg("[register user success]: register success")
 }
 
 func Logout() *Result {

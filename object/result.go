@@ -31,8 +31,8 @@ func SuccessData(data interface{}) *Result {
 	return NewResult(true, SuccessCode, SuccessMessage, data)
 }
 
-func SuccessMsg(msg string, data interface{}) *Result {
-	return NewResult(true, SuccessCode, msg, data)
+func SuccessMsg(msg string) *Result {
+	return NewResult(true, SuccessCode, msg, nil)
 }
 
 func FailResult() *Result {
