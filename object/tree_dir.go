@@ -1,5 +1,10 @@
 package object
 
+const (
+	PathSeparator = "/"
+	BackToPre     = ".."
+)
+
 type dir struct {
 	fcb      Fcb
 	index    int   // 当前索引
