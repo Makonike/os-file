@@ -68,6 +68,37 @@ func LoadDisk(path string) *object.Result {
 	return object.SuccessResult()
 }
 
+// GetRecord 读取盘块中的信息至内存中
+func GetRecord(sBlockId, blockNum int) *object.Result {
+	record := make([]rune, 0)
+	if sBlockId == 0 {
+		return object.SuccessData(record)
+	}
+
+	if sBlockId < object.RecordStartBlock || sBlockId >= object.BlockNum || blockNum <= 0 || blockNum > object.BlockNum {
+		return object.FailMsg("[get record fail]: internal server error")
+	}
+
+	disk := object.DCache.Disk
+	bP := 0
+	for i := 0; i < blockNum; {
+		if i == blockNum-1 {
+			if bP >= len(disk.Disk[sBlockId+i]) || disk.Disk[sBlockId+i][bP] == 0 {
+				break
+			}
+		}
+
+		record = append(record, disk.Disk[sBlockId+i][bP])
+		if bP >= object.BlockSize {
+			bP = 0
+			i++
+		} else {
+			bP++
+		}
+	}
+	return object.SuccessData(record)
+}
+
 func StoreRecord(fcb *object.Fcb, record []rune) *object.Result {
 	if len(record) == 0 {
 		return object.SuccessResult()
