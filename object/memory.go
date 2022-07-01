@@ -1,10 +1,10 @@
 package object
 
-var memory = &Memory{}
+var MMemory = &Memory{}
 
 type Memory struct {
-	curUser *User
-	curDir  *dir
-	bitMap  [][]int
-	acFile  *ActiveFile
+	CurUser *User
+	CurDir  *Dir
+	BitMap  [][]int
+	AcFile  *ActiveFile
 }

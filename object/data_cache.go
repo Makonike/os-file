@@ -1,7 +1,7 @@
 package object
 
-var dCache = &dataCache{}
+var DCache = &dataCache{}
 
 type dataCache struct {
-	disk *disk
+	Disk *disk
 }
