@@ -1,15 +1,15 @@
 package object
 
 var (
-	CanRead = ProtectType{
+	CanRead = &ProtectType{
 		value: 1,
 		desc:  "可读",
 	}
-	CanWrite = ProtectType{
+	CanWrite = &ProtectType{
 		value: 2,
 		desc:  "可读",
 	}
-	CanExecute = ProtectType{
+	CanExecute = &ProtectType{
 		value: 3,
 		desc:  "可读",
 	}
