@@ -3,8 +3,8 @@ package object
 import "time"
 
 type User struct {
-	username string
-	password string
+	username string // 用户名
+	password string // 密码
 }
 
 func NewUser(username, password string) *User {

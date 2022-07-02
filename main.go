@@ -127,7 +127,7 @@ func main() {
 			if !res.Success() {
 				fmt.Println(res.Msg())
 			}
-		case cmd == "ls":
+		case cmd == "dir":
 			if object.MMemory.CurUser == nil {
 				fmt.Println(NotLoginError)
 				continue
