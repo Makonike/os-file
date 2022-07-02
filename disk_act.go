@@ -1,72 +1,8 @@
 package main
 
 import (
-	"bufio"
-	"encoding/json"
-	"fmt"
-	"io"
-	"os"
 	"os-file/object"
-	path2 "path"
-	"strings"
 )
-
-// todo: deprecated
-func SaveDisk(path string) *object.Result {
-	var err error
-	_, filename := path2.Split(path)
-	fmt.Println(filename)
-	err = os.MkdirAll(path, 0777)
-	if err != nil {
-		return object.FailMsg("create dir error")
-	}
-	return nil
-}
-
-// todo: deprecated
-func LoadDisk(path string) *object.Result {
-	f, err := os.Open(path)
-	defer func(file *os.File) {
-		err = file.Close()
-		if err != nil {
-			fmt.Printf("close file error %s\n", err)
-		}
-	}(f)
-	if err != nil {
-		return object.FailMsg("[load disk fail]: not found disk file")
-	}
-
-	reader := bufio.NewReader(f)
-	res := make([]byte, 0)
-	buf := make([]byte, 1024)
-	for {
-		n, err := reader.Read(buf)
-		if err != nil && err != io.EOF {
-			fmt.Printf("read error %s", err)
-			break
-		}
-		// not exist or not data in buf
-		if n == 0 {
-			break
-		}
-		// write into file
-		res = append(res, buf[:n]...)
-	}
-	// json转换为二进制存储
-	ress := string(res)
-	var disk object.Disk
-	dec := json.NewDecoder(strings.NewReader(ress))
-	err = dec.Decode(&disk)
-	if err != io.EOF {
-		return object.FailMsg("[load disk fail]: open disk file fail")
-	}
-	// todo: test
-	fmt.Println(disk)
-	object.DCache.Disk = &disk
-	object.MMemory.CurDir = object.DCache.Disk.Dirs[0]
-	object.MMemory.BitMap = object.DCache.Disk.BitMap
-	return object.SuccessResult()
-}
 
 // GetRecord 读取盘块中的信息至内存中
 func GetRecord(sBlockId, blockNum int) *object.Result {
