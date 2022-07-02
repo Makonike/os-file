@@ -79,7 +79,6 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	var res *object.Result
 	for {
-		// todo: show()
 		scanner.Scan()
 		raw := scanner.Text()
 		cmd, args, err := ParseCmd(raw)
