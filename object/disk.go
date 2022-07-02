@@ -26,3 +26,13 @@ type Disk struct {
 	Dirs    []*Dir           // contain all tree struct dir
 	BitMap  [][]int
 }
+
+func NewDisk() *Disk {
+	return &Disk{
+		Disk:    make([][]rune, 0),
+		UMap:    make(map[string]*User),
+		FcbList: make([]*Fcb, 0),
+		Dirs:    make([]*Dir, 0),
+		BitMap:  make([][]int, 0),
+	}
+}

@@ -56,7 +56,8 @@ func Register(username, password string) *Result {
 	fcb := NewFcb(true, username, 0, 0, nil, ct, ct)
 	DCache.Disk.FcbList = append(DCache.Disk.FcbList, fcb)
 
-	dir := NewDir(fcb, len(DCache.Disk.Dirs)-1, 0)
+	dir := NewDir(fcb, len(DCache.Disk.Dirs), 0)
+	DCache.Disk.Dirs = append(DCache.Disk.Dirs, dir)
 	DCache.Disk.Dirs[0].Children = append(DCache.Disk.Dirs[0].Children, dir)
 	return SuccessMsg("[register user success]: register success")
 }

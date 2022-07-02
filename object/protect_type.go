@@ -19,3 +19,11 @@ type ProtectType struct {
 	value int    // 状态码
 	desc  string // 描述
 }
+
+func All() []*ProtectType {
+	return []*ProtectType{
+		CanRead,
+		CanWrite,
+		CanExecute,
+	}
+}

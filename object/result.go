@@ -58,3 +58,7 @@ func (r *Result) Data() interface{} {
 func (r *Result) Success() bool {
 	return r.isSuccess
 }
+
+func (r *Result) Msg() string {
+	return r.message
+}

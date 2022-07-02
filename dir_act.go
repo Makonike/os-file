@@ -23,9 +23,8 @@ func Mkdir(dirName string) *object.Result {
 	fcb := object.NewFcb(true, dirName, 0, 0, nil, curt, curt)
 	object.DCache.Disk.FcbList = append(object.DCache.Disk.FcbList, fcb)
 
-	dir := object.NewDir(fcb, 0, object.MMemory.CurDir.IIndex())
+	dir := object.NewDir(fcb, len(object.DCache.Disk.Dirs), object.MMemory.CurDir.IIndex())
 	object.DCache.Disk.Dirs = append(object.DCache.Disk.Dirs, dir)
-	dir.Index = len(object.DCache.Disk.Dirs) - 1
 	object.MMemory.CurDir.Children = append(object.MMemory.CurDir.Children, dir)
 	return object.SuccessResult()
 }
