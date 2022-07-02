@@ -100,11 +100,13 @@ func Write(record string) *object.Result {
 	}
 	oriR := acf.Record
 	insert := []rune(record)
-	copy(oriR[acf.WritePtr+len(insert):], oriR[acf.WritePtr:])
+	b := make([]rune, len(oriR[:acf.WritePtr])+len(insert))
+	copy(b, oriR[:acf.WritePtr])
 	for i := 0; i < len(insert); i++ {
-		oriR[acf.WritePtr+i] = insert[i]
+		b[i] = insert[i]
 	}
-
+	b = append(b, oriR[acf.WritePtr:]...)
+	oriR = b
 	res := StoreRecord(acf.Fcb, oriR)
 	if res.Success() {
 		object.MMemory.AcFile.WritePtr += len(record)

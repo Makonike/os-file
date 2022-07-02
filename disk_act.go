@@ -70,7 +70,7 @@ func LoadDisk(path string) *object.Result {
 
 // GetRecord 读取盘块中的信息至内存中
 func GetRecord(sBlockId, blockNum int) *object.Result {
-	record := make([]rune, 0)
+	record := make([]rune, 1024)
 	if sBlockId == 0 {
 		return object.SuccessData(record)
 	}

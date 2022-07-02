@@ -136,7 +136,7 @@ func main() {
 			if !res.Success() {
 				fmt.Println(res.Msg())
 			} else {
-				// todo: show file list
+				// done: show file list
 				fcbl := res.Data().([]*object.Fcb)
 				ShowFileList()
 				for _, v := range fcbl {
