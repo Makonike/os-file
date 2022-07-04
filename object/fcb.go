@@ -2,6 +2,7 @@ package object
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -32,5 +33,5 @@ func (f *Fcb) IsDir() bool {
 }
 
 func (f *Fcb) String() string {
-	return fmt.Sprintf("%20s %20s %20s", f.Name, f.CreateTime.Format(time.RFC822), f.UpdateTime.Format(time.RFC822))
+	return fmt.Sprintf("%20s %10s %20s %20s", f.Name, strconv.FormatInt(int64(f.BlockNum), 10), f.CreateTime.Format(time.RFC822), f.UpdateTime.Format(time.RFC822))
 }

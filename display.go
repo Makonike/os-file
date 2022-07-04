@@ -34,7 +34,7 @@ func ShowBitMap(bitMap [][]int) {
 }
 
 func ShowFileList() {
-	fmt.Printf("%20s %20s %20s\n", "filename", "createTime", "updateTime")
+	fmt.Printf("%20s %10s %20s %20s\n", "filename", "size", "createTime", "updateTime")
 }
 
 func ParseCmd(raw string) (string, []string, error) {
